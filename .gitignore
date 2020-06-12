@@ -1,0 +1,18 @@
+# back-end
+socket.io-backend/node_modules/
+
+# front-end
+MobileApp/node_modules/**/*
+MobileApp/.expo/*
+MobileApp/npm-debug.*
+MobileApp/*.jks
+MobileApp/*.p8
+MobileApp/*.p12
+MobileApp/*.key
+MobileApp/*.mobileprovision
+MobileApp/*.orig.*
+MobileApp/web-build/
+MobileApp/web-report/
+
+# macOS
+MobileApp/.DS_Store
