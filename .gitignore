@@ -16,3 +16,5 @@ MobileApp/web-report/
 
 # macOS
 MobileApp/.DS_Store
+
+tmp/
