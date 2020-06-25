@@ -4,20 +4,29 @@ import io from "socket.io-client"
 
 export default function HomeScreen() {
   const [messageToSend, setMessageToSend] = useState("");
+  const [recvMessages, setRecvMessages] = useState([]);
   const socket = useRef(null);
 
   useEffect(() => {
     socket.current = io("http://192.168.0.21:3001")
+    socket.current.on("message",(message) => {
+      setRecvMessages((prevState) => {return [...prevState,message]})
+    })
   },[])
 
   const sendMessage = () => {
+    console.log("sending "+messageToSend+" to all cellphones")
     socket.current.emit("message", messageToSend)
     setMessageToSend("")
   }
 
+  const textOfReceivedMessages = recvMessages.map(msg => {
+    return <Text key={msg}>{msg}</Text>
+  })
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      {textOfReceivedMessages}
       <TextInput 
         value={messageToSend} 
         onChangeText={(text) => setMessageToSend(text)} 
