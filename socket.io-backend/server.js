@@ -1,7 +1,9 @@
 const io = require("socket.io")()
 const messageHandler = require('./handlers/message.handler')
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.NODE_ENV === 'production' 
+                      ? '8080'
+                      : '3001'
 
 let currentUserId = 2;
 const userIds = {};
@@ -13,5 +15,5 @@ io.on("connection", (socket) => {
     messageHandler.handleMessage(socket, userIds)
 })
 
-io.listen();
-console.log("server listening")
+io.listen(PORT);
+console.log("server listening on port "+PORT)
