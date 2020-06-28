@@ -13,5 +13,5 @@ io.on("connection", (socket) => {
     messageHandler.handleMessage(socket, userIds)
 })
 
-io.listen(PORT);
-console.log("server listening on port "+PORT)
+io.listen();
+console.log("server listening")
