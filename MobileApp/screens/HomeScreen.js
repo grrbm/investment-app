@@ -3,18 +3,21 @@ import { Text, View, TextInput, Platform, KeyboardAvoidingView, StyleSheet } fro
 import io from "socket.io-client"
 import { GiftedChat } from 'react-native-gifted-chat';
 
+const RUN_ON_HEROKU = false;
+
 export default function HomeScreen() {
   const [messageToSend, setMessageToSend] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
   const socket = useRef(null);
 
-  const PORT = process.env.PORT || '3001';
-  const ADDRESS = '0.0.0.0';
+  const CONNECT_URL = RUN_ON_HEROKU 
+                      ? 'http://grrbm-investment-app.herokuapp.com:3001'
+                      : 'http://192.168.0.21:3001' 
 
   useEffect(() => {
     if (socket.current === null){
       //socket.current = io("http://192.168.0.21:3001")
-      socket.current = io(ADDRESS+':'+PORT);
+      socket.current = io(CONNECT_URL);
       socket.current.on("message",(message) => {
         debugger;
         console.log("message",message);
