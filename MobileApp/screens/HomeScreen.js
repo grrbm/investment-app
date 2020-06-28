@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Platform, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import io from "socket.io-client"
 import { GiftedChat } from 'react-native-gifted-chat';
 
@@ -9,66 +9,40 @@ export default function HomeScreen() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io("http://192.168.0.21:3001")
-    socket.current.on("message",(message) => {
-      const testMessage = {
-        _id: 3,
-        text: 'Hello developer',
-        createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://facebook.github.io/react/img/logo_og.png',
-        },
-      };
-      testMessage.text = message;
-      setReceivedMessages((prevState) => GiftedChat.append(prevState, testMessage));
-    })
-    setReceivedMessages(
-      [
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://facebook.github.io/react/img/logo_og.png',
-        },
-      },
-      ],)
+    if (socket.current === null){
+      socket.current = io("http://192.168.0.21:3001")
+      socket.current.on("message",(message) => {
+        debugger;
+        console.log("message",message);
+        setReceivedMessages((prevState) => GiftedChat.append(prevState, message));
+      })
+    }
+    return function cleanup () {
+      console.log("component unmounted !")
+    }
   },[])
 
-  const sendMessage = () => {
-    console.log("sending "+messageToSend+" to all cellphones")
-    socket.current.emit("message", messageToSend)
-    setMessageToSend("")
-  }
-
-  const textOfReceivedMessages = receivedMessages.map(msg => {
-    return <Text key={msg}>{msg}</Text>
-  })
-
   const onSend = (messages) => {
+    console.log(messages);
     socket.current.emit("message", messages[0].text);
+    setReceivedMessages(prevState => GiftedChat.append(prevState, messages));
   }
 
-  return (    
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  })
+  return (  
       <GiftedChat
         messages={receivedMessages}
         onSend={messages => onSend(messages)}
         user={{
-          _id: 1,
+            _id: 1,
         }}
       />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
