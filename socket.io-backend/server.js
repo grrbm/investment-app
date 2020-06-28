@@ -2,7 +2,7 @@ const socketIO = require("socket.io")
 const messageHandler = require('./handlers/message.handler')
 const express = require('express')
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const INDEX = '/index.html';
 
 const server = express()
