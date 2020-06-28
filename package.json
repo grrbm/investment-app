@@ -1,0 +1,20 @@
+{
+  "name": "investment-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node socket.io-backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grrbm/investment-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grrbm/investment-app/issues"
+  },
+  "homepage": "https://github.com/grrbm/investment-app#readme"
+}
