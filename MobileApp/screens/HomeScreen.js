@@ -11,7 +11,7 @@ export default function HomeScreen() {
   const socket = useRef(null);
 
   const CONNECT_URL = RUN_ON_HEROKU 
-                      ? 'http://grrbm-investment-app.herokuapp.com:23884'
+                      ? 'http://grrbm-investment-app.herokuapp.com:8080'
                       : 'http://192.168.0.21:3001' 
 
   useEffect(() => {
