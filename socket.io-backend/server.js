@@ -1,4 +1,4 @@
-const socketIO = require("socket.io")()
+const socketIO = require("socket.io")
 const messageHandler = require('./handlers/message.handler')
 const express = require('express')
 
