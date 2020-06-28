@@ -14,4 +14,4 @@ io.on("connection", (socket) => {
 })
 
 io.listen(PORT);
-console.log("server listening")
+console.log("server listening on port "+PORT)

@@ -3,7 +3,7 @@ import { Text, View, TextInput, Platform, KeyboardAvoidingView, StyleSheet } fro
 import io from "socket.io-client"
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const RUN_ON_HEROKU = false;
+const RUN_ON_HEROKU = true;
 
 export default function HomeScreen() {
   const [messageToSend, setMessageToSend] = useState("");
