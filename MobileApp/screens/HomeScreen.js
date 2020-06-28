@@ -8,9 +8,13 @@ export default function HomeScreen() {
   const [receivedMessages, setReceivedMessages] = useState([]);
   const socket = useRef(null);
 
+  const PORT = process.env.PORT || '3001';
+  const ADDRESS = '0.0.0.0';
+
   useEffect(() => {
     if (socket.current === null){
-      socket.current = io("http://192.168.0.21:3001")
+      //socket.current = io("http://192.168.0.21:3001")
+      socket.current = io(ADDRESS+':'+PORT);
       socket.current.on("message",(message) => {
         debugger;
         console.log("message",message);
