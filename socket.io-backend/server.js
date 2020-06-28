@@ -1,12 +1,17 @@
-const io = require("socket.io")()
+const socketIO = require("socket.io")()
 const messageHandler = require('./handlers/message.handler')
 
-const PORT = process.env.NODE_ENV === 'production' 
-                      ? '8080'
-                      : '3001'
+const PORT = process.env.PORT || 3000;
+const INDEX = '/index.html';
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 let currentUserId = 2;
 const userIds = {};
+
+const io = socketIO(server)
 
 io.on("connection", (socket) => {
     console.log("a user connected!")
@@ -14,6 +19,3 @@ io.on("connection", (socket) => {
     userIds[socket.id] = currentUserId++;
     messageHandler.handleMessage(socket, userIds)
 })
-
-io.listen(PORT);
-console.log("server listening on port "+PORT)
