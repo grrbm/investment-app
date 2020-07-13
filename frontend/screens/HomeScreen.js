@@ -2,12 +2,14 @@ import React, {useEffect, useState, useRef} from 'react';
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import io from "socket.io-client"
 import { GiftedChat } from 'react-native-gifted-chat';
+import JoinScreen from './JoinScreen'
 
 const RUN_ON_HEROKU = true;
 
 export default function HomeScreen() {
   const [messageToSend, setMessageToSend] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
+  const [hasJoined, setHasJoined] = useState(false);
   const socket = useRef(null);
 
   const CONNECT_URL = RUN_ON_HEROKU 
@@ -43,13 +45,22 @@ export default function HomeScreen() {
       justifyContent: 'center'
     }
   })
+
+  const joinChat = username => {
+    socket.current.emit("join", username);
+    setHasJoined(true);
+  }
+
   return (  
-      <GiftedChat
-        messages={receivedMessages}
-        onSend={messages => onSend(messages)}
-        user={{
-            _id: 1,
-        }}
-      />
+    <>
+        <GiftedChat
+          renderUsernameOnMessage
+          messages={receivedMessages}
+          onSend={messages => onSend(messages)}
+          user={{
+              _id: 1,
+          }}
+        /> 
+    </>
   );
 }
