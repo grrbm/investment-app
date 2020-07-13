@@ -5,8 +5,6 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import JoinScreen from './JoinScreen'
 import CONNECT_URL from '../config.js'
 
-const RUN_ON_HEROKU = true;
-
 export default function HomeScreen() {
   const [messageToSend, setMessageToSend] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
