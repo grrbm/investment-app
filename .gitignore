@@ -1,3 +1,6 @@
+#root
+node_modules
+
 # back-end
 backend/node_modules/
 
