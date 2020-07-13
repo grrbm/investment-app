@@ -23,5 +23,12 @@ io.on("connection", (socket) => {
       users(socked.id).username = username;
       messageHandler.handleMessage(socket, users)
     })
+    socket.on("action", action => {
+      switch(action.type){
+        case "server/hello":
+          console.log("Got a hello event", action.data);
+          socket.emit("action", { type: "message", data: "Good day!"});
+      }
+    })
     
 })

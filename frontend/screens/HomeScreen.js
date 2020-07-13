@@ -3,6 +3,7 @@ import { Text, View, TextInput, Platform, KeyboardAvoidingView, StyleSheet } fro
 import io from "socket.io-client"
 import { GiftedChat } from 'react-native-gifted-chat';
 import JoinScreen from './JoinScreen'
+import CONNECT_URL from '../config.js'
 
 const RUN_ON_HEROKU = true;
 
@@ -12,9 +13,7 @@ export default function HomeScreen() {
   const [hasJoined, setHasJoined] = useState(false);
   const socket = useRef(null);
 
-  const CONNECT_URL = RUN_ON_HEROKU 
-                      ? 'http://grrbm-investment-app.herokuapp.com'
-                      : 'http://192.168.0.21:3001'
+  
 
   useEffect(() => {
     if (socket.current === null){
