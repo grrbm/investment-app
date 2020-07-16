@@ -10,10 +10,14 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const userIds = {};
-
 const io = socketIO(server)
 const users = {}
+
+function createUserAvatarUrl() {
+  const rand1 = Math.round(Math.random() * 200 + 100);
+  const rand2 = Math.round(Math.random() * 200 + 100);
+  return `https://placeimg.com/${rand1}/${rand2}/any`;
+}
 
 function createUsersOnline()
 {
@@ -28,6 +32,7 @@ io.on("connection", (socket) => {
     users[socket.id] = {userId: uuidv1()};
     socket.on("join", username => {
       users[socked.id].username = username;
+      users[socket.id].avatar = createUserAvatarUrl();
       messageHandler.handleMessage(socket, users)
     })
     socket.on("disconnect", () => {
@@ -43,6 +48,7 @@ io.on("connection", (socket) => {
         case "server/join":
           console.log("Got join event", action.data);
           users[socket.id].username = action.data;
+          users[socket.id].avatar = createUserAvatarUrl();
           io.emit("action",{ 
             type: "users_online", 
             data: createUsersOnline()

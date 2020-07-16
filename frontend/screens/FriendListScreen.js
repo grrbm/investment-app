@@ -1,5 +1,5 @@
 import React from "react"
-import {View, Text, FlatList, StyleSheet, StatusBar } from "react-native"
+import {View, Text, FlatList, StyleSheet, StatusBar,Image} from "react-native"
 import { useSelector } from "react-redux"
 
 export default function FriendListScreen() {
@@ -39,6 +39,10 @@ export default function FriendListScreen() {
                 return (
                     <View style={styles}>
                       <View>
+                        <Image 
+                          style={{width:100, height:100,borderRadius:50}}
+                          source={{uri:item.avatar}}
+                        />
                         <Text style={{ fontSize: 20 }}>{item.username}</Text>
                       </View>
                     </View>
