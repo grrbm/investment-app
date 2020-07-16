@@ -1,4 +1,5 @@
-const socketIO = require("socket.io")
+const socketIO = require("socket.io")()
+const uuidv1 = require('uuid/v1')
 const messageHandler = require('./handlers/message.handler')
 const express = require('express')
 
@@ -9,19 +10,29 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-let currentUserId = 2;
 const userIds = {};
 
 const io = socketIO(server)
 const users = {}
 
+function createUsersOnline()
+{
+  const values = Object.values(users);
+  const onlyWithUsernames = values.filter(u => u.username !== undefined);
+  return onlyWithUsernames;
+}
+
 io.on("connection", (socket) => {
     console.log("a user connected!")
     console.log(socket.id)
-    users[socket.id] = {userId: currentUserId++};
+    users[socket.id] = {userId: uuidv1};
     socket.on("join", username => {
       users(socked.id).username = username;
       messageHandler.handleMessage(socket, users)
+    })
+    socket.on("disconnect", () => {
+      delete users[socket.id];
+      io.emit("action", {type: "users_online", data: createUsersOnline()})
     })
     socket.on("action", action => {
       switch(action.type){
@@ -32,11 +43,9 @@ io.on("connection", (socket) => {
         case "server/join":
           console.log("Got join event", action.data);
           users(socked.id).username = action.data;
-          const values = Object.values(users);
-          const onlyWithUsernames = values.filter(u => u.username !== undefined)
           io.emit("action",{ 
             type: "users_online", 
-            data: onlyWithUsernames
+            data: createUsersOnline()
           })
           break;
       }
