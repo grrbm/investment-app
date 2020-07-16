@@ -32,6 +32,12 @@ io.on("connection", (socket) => {
         case "server/join":
           console.log("Got join event", action.data);
           users(socked.id).username = action.data;
+          const values = Object.values(users);
+          const onlyWithUsernames = values.filter(u => u.username !== undefined)
+          io.emit("action",{ 
+            type: "users_online", 
+            data: onlyWithUsernames
+          })
           break;
       }
     })
