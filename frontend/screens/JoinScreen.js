@@ -1,8 +1,9 @@
 import React, {useState} from "react"
 import {View, Button, TextInput, Image} from "react-native"
+import {useDispatch} from "react-redux"
 
-
-export default function JoinScreen(props) {
+export default function JoinScreen({ navigation }) {
+    const dispatch = useDispatch();
     const [username, setUsername] = useState("");
     return(
         <View style={{flex:1, alignItems: 'center', justifyContent:'center'}}>
@@ -18,7 +19,13 @@ export default function JoinScreen(props) {
                     style={{ fontSize: 30, textAlign: 'center'}} 
                     placeholder="Enter username" 
                 />
-                <Button title="Join Chat" onPress={() => props.joinChat(username)} />
+                <Button 
+                    title="Join Chat" 
+                    onPress={() => {
+                        dispatch({ type: "server/join", data: username})
+                        navigation.navigate("App")
+                    }} 
+                />
             </View>
         </View>
     )

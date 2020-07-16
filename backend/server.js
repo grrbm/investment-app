@@ -28,6 +28,11 @@ io.on("connection", (socket) => {
         case "server/hello":
           console.log("Got a hello event", action.data);
           socket.emit("action", { type: "message", data: "Good day!"});
+          break;
+        case "server/join":
+          console.log("Got join event", action.data);
+          users(socked.id).username = action.data;
+          break;
       }
     })
     

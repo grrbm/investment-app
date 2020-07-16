@@ -1,7 +1,8 @@
 import React from 'react';
 import AppContainer from './AppContainer'
-import {createStore, applyMiddleware} from "redux"
+import { createStore, applyMiddleware } from "redux"
 import createSocketIoMiddleware from "redux-socket.io"
+import { Provider } from "react-redux"
 import io from "socket.io-client"
 import CONNECT_URL from './config.js'
 const socket = io(CONNECT_URL)
@@ -25,7 +26,9 @@ store.dispatch({type: "server/hello", data: "Hello!"})
 
 export default function App() {
   return (
-    <AppContainer />
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
   );
 }
 
