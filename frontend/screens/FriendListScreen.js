@@ -32,11 +32,20 @@ export default function FriendListScreen() {
     return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Text>This is the friend list screens</Text>
-            <FlatList>
-                data={usersOnline}
-                renderItem={renderItem}
-                keyExtractor={item => item.username}
-            </FlatList>
+            <FlatList
+              data={usersOnline}
+              renderItem={({ item }) => {
+                console.log("item", item);
+                return (
+                    <View style={styles}>
+                      <View>
+                        <Text style={{ fontSize: 20 }}>{item.username}</Text>
+                      </View>
+                    </View>
+                );
+              }}
+              keyExtractor={item => item.userId}
+            />
         </View>
     )
 }
