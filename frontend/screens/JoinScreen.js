@@ -23,7 +23,7 @@ export default function JoinScreen({ navigation }) {
                     title="Join Chat" 
                     onPress={() => {
                         dispatch({ type: "server/join", data: username})
-                        navigation.navigate("App")
+                        navigation.navigate("Friend")
                     }} 
                 />
             </View>

@@ -10,7 +10,8 @@ const AppStack = createStackNavigator({
 export default createAppContainer(
     createSwitchNavigator({
         App: AppStack,
-        Join: JoinScreen
+        Join: JoinScreen,
+        Friend: FriendListScreen
     }, {
         initialRouteName: "Join"
     })
