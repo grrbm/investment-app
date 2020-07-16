@@ -1,4 +1,4 @@
-const socketIO = require("socket.io")()
+const socketIO = require("socket.io")
 const { v1: uuidv1 } = require('uuid');
 const messageHandler = require('./handlers/message.handler')
 const express = require('express')
