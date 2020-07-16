@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
           break;
         case "server/join":
           console.log("Got join event", action.data);
-          users(socked.id).username = action.data;
+          users(socket.id).username = action.data;
           io.emit("action",{ 
             type: "users_online", 
             data: createUsersOnline()
