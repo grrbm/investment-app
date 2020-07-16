@@ -5,7 +5,7 @@ import JoinScreen from "./screens/JoinScreen"
 import FriendListScreen from "./screens/FriendListScreen"
 
 const AppStack = createStackNavigator({
-    Home: FriendListScreen
+    Home: HomeScreen
 })
 export default createAppContainer(
     createSwitchNavigator({

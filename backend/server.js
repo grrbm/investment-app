@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     console.log(socket.id)
     users[socket.id] = {userId: uuidv1};
     socket.on("join", username => {
-      users(socked.id).username = username;
+      users[socked.id].username = username;
       messageHandler.handleMessage(socket, users)
     })
     socket.on("disconnect", () => {
