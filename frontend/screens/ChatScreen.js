@@ -31,13 +31,14 @@ export default function ChatScreen({navigation}) {
             dispatch({
               type: "server/private_message",
               data: { message: messages[0], conversationId: userId }
-            })
+            });
             }
           }
           user={{
               _id: selfUser.userId
           }}
-        /> 
+        />
+        
     </View>
   );
 }

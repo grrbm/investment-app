@@ -36,7 +36,7 @@ function reducer(state = { conversations: {} }, action) {
           [conversationId] : {
             ...state.conversations[conversationId],
             messages: [
-              action.message.data,
+              action.data.message,
               ...state.conversations[conversationId].messages
             ]
           }
