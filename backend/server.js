@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
               const socketId = socketIds[i];
               io.sockets.sockets[socketId].emit("action", { 
                 type: "private_message",
-                data: ...action.data,
+                data: {...action.data},
                 conversationId: from
               })
             }
