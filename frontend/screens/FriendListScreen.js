@@ -1,51 +1,35 @@
 import React from "react"
-import {View, Text, FlatList, StyleSheet, StatusBar,Image} from "react-native"
+import {View, Text, FlatList, StyleSheet, TouchableOpacity,Image} from "react-native"
 import { useSelector } from "react-redux"
 
-export default function FriendListScreen() {
+
+
+export default function FriendListScreen({navigation}) {
     const usersOnline = useSelector(state => state.usersOnline);
-    console.log("usersOnline:", usersOnline);
-    const Item = ({ title }) => (
-        <View style={styles.item}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
-      );
-      const styles = StyleSheet.create({
-        container: {
-          flex: 1,
-          marginTop: StatusBar.currentHeight || 0,
-        },
-        item: {
-          backgroundColor: '#f9c2ff',
-          padding: 20,
-          marginVertical: 8,
-          marginHorizontal: 16,
-        },
-        title: {
-          fontSize: 32,
-        },
-      });
-      
-    const renderItem = ({ item }) => (
-        <Item username={item.username} />
-    );      
+    console.log("usersOnline:", usersOnline);     
+    
+    const { itemContainerStyle, avatarImgStyle, avatarNameViewStyle } = styles;
+
     return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>This is the friend list screens</Text>
+        <View style={{flex:1}}>
             <FlatList
               data={usersOnline}
               renderItem={({ item }) => {
                 console.log("item", item);
                 return (
-                    <View style={styles}>
-                      <View>
-                        <Image 
-                          style={{width:100, height:100,borderRadius:50}}
-                          source={{uri:item.avatar}}
-                        />
-                        <Text style={{ fontSize: 20 }}>{item.username}</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Chat", { name:item.username })}>
+                      <View style={itemContainerStyle}>
+                        <View>
+                          <Image 
+                            style={avatarImgStyle}
+                            source={{uri:item.avatar}}
+                          />
+                        </View>
+                        <View style={avatarNameViewStyle}>
+                          <Text style={{fontSize:20}}>{item.username}</Text>
+                        </View>
                       </View>
-                    </View>
+                    </TouchableOpacity>
                 );
               }}
               keyExtractor={item => item.userId}
@@ -53,3 +37,8 @@ export default function FriendListScreen() {
         </View>
     )
 }
+const styles = StyleSheet.create({
+  itemContainerStyle: {flex:1, flexDirection:'row'},
+  avatarImgStyle: {width:100, height:100,borderRadius:50},
+  avatarNameViewStyle: {flex:1,alignItems: 'center', justifyContent: 'center'}
+})
