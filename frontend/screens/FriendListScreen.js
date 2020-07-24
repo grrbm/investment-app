@@ -17,7 +17,7 @@ export default function FriendListScreen({navigation}) {
               renderItem={({ item }) => {
                 console.log("item", item);
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate("Chat", { name:item.username })}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Chat", { name:item.username, userId: item.userId })}>
                       <View style={itemContainerStyle}>
                         <View>
                           <Image 
