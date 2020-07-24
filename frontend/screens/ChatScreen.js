@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { Header } from 'react-navigation-stack'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 ChatScreen.navigationOptions = screenProps => ({
   title: screenProps.navigation.getParam("name")
@@ -11,29 +11,42 @@ ChatScreen.navigationOptions = screenProps => ({
 
 export default function ChatScreen({navigation}) {
   const dispatch = useDispatch();
+  const selfUser = useSelector(state => state.selfUser);  
+  const conversations = useSelector(state => state.conversations);
+  const userId = navigation.getParam("userId");
+  const messages = conversations[userId].messages;
+
   
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  })
-
   return (  
     <View style={{flex:1}}>
         <GiftedChat
           renderUsernameOnMessage
           messages={[]}
-          onSend={messages => 
-            dispatch({type: "server/private-message", data: {text: messages[0].text, to: navigation.getParam("userId")}})
+          onSend={messages =>
+            { 
+            dispatch({
+              type: "private_message", 
+              data: { message: messages[0], conversationId: userId }
+            });
+            dispatch({
+              type: "server/private_message",
+              data: { message: messages[0], conversationId: userId }
+            })
+            }
           }
           user={{
-              _id: 1,
+              _id: selfUser.userId
           }}
         /> 
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
