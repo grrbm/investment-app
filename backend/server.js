@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
           const from = users[socket.id].userId;
           const userValues = Object.values(users);
           const socketIds = Object.keys(users);
-          for(let i=0; userValues.length; i++)
+          for(let i=0; i < userValues.length; i++)
           {
             if (userValues[i].userId === conversationId)
             {
