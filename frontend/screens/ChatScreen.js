@@ -21,7 +21,7 @@ export default function ChatScreen({navigation}) {
     <View style={{flex:1}}>
         <GiftedChat
           renderUsernameOnMessage
-          messages={[]}
+          messages={messages}
           onSend={messages =>
             { 
             dispatch({

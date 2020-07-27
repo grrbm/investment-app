@@ -32,7 +32,8 @@ io.on("connection", (socket) => {
     users[socket.id] = {userId: uuidv1()};
     socket.on("disconnect", () => {
       delete users[socket.id];
-      io.emit("action", {type: "users_online", data: createUsersOnline()})
+      console.log(users[socket.id]+" disconnected.");
+      io.emit("action", {type: "users_online", data: createUsersOnline()});
     })
     socket.on("reconnect_attempt", () => {
       console.log(users[socket.id]+" is attempting to reconnect.");
