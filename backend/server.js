@@ -31,12 +31,12 @@ io.on("connection", (socket) => {
     console.log(socket.id)
     users[socket.id] = {userId: uuidv1()};
     socket.on("disconnect", () => {
-      console.log(users[socket.id]+" disconnected.");
+      console.log(JSON.stringify(users[socket.id])+" disconnected.");
       delete users[socket.id];
       io.emit("action", {type: "users_online", data: createUsersOnline()});
     })
     socket.on("reconnect_attempt", () => {
-      console.log(users[socket.id]+" is attempting to reconnect.");
+      console.log(JSON.stringify(users[socket.id])+" is attempting to reconnect.");
     })
     socket.on("action", action => {
       switch(action.type){
@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
             if (userValues[i].userId === conversationId)
             {
               const socketId = socketIds[i];
-              console.log("emmiting private message: "+action.data);
+              console.log("emmiting private message: "+JSON.stringify(action.data));
               io.sockets.sockets[socketId].emit("action", { 
                 type: "private_message",
                 data: {...action.data},
