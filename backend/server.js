@@ -34,6 +34,9 @@ io.on("connection", (socket) => {
       delete users[socket.id];
       io.emit("action", {type: "users_online", data: createUsersOnline()})
     })
+    socket.on("reconnect_attempt", () => {
+      console.log(users[socket.id]+" is attempting to reconnect.");
+    })
     socket.on("action", action => {
       switch(action.type){
         case "server/join":
