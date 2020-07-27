@@ -9,7 +9,7 @@ export default function FriendListScreen({navigation}) {
     const { itemContainerStyle, avatarImgStyle, avatarNameViewStyle } = styles;
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, paddingTop: 36}}>
             <FlatList
               data={usersOnline}
               renderItem={({ item }) => {
