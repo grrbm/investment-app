@@ -50,6 +50,7 @@ io.on("connection", (socket) => {
           socket.emit("action", { type: "self_user", data: users[socket.id] })
           break;
         case "server/private_message":
+          console.log("received server/private_message event");
           const conversationId = action.data.conversationId;
           const from = users[socket.id].userId;
           const userValues = Object.values(users);
@@ -59,6 +60,7 @@ io.on("connection", (socket) => {
             if (userValues[i].userId === conversationId)
             {
               const socketId = socketIds[i];
+              console.log("emmiting private message: "+action.data);
               io.sockets.sockets[socketId].emit("action", { 
                 type: "private_message",
                 data: {...action.data},
@@ -66,6 +68,7 @@ io.on("connection", (socket) => {
               })
             }
           }
+          break;
       }
     })
     
