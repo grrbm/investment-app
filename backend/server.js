@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
     socket.on("reconnect_attempt", () => {
       console.log(JSON.stringify(users[socket.id])+" is attempting to reconnect.");
     })
+    //server->client messages are dispatched as actions when received
     socket.on("action", action => {
       switch(action.type){
         case "server/join":

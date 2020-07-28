@@ -8,6 +8,7 @@ import CONNECT_URL from './config.js'
 const socket = io(CONNECT_URL)
 const socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
+//client->server messages: messages are sent by dispatching actions to the redux store
 function reducer(state = { conversations: {} }, action) {
   switch (action.type) {
     case "users_online":
@@ -25,15 +26,13 @@ function reducer(state = { conversations: {} }, action) {
         }
       }
       return { ...state, usersOnline, conversations }
-    case "self_user":
-      return { ...state, selfUser: action.data }
     case "private_message":
       const conversationId = action.data.conversationId;
       return {
         ...state,
         conversations: {
           ...state.conversations,
-          [conversationId] : {
+          [conversationId]: {
             ...state.conversations[conversationId],
             messages: [
               action.data.message,
@@ -41,7 +40,9 @@ function reducer(state = { conversations: {} }, action) {
             ]
           }
         }
-      }
+      };
+    case "self_user":
+      return { ...state, selfUser: action.data };
     default:
       return state;
   }
