@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
             type: "users_online", 
             data: createUsersOnline()
           });
+          console.log("these are all the users: "+JSON.stringify(users));
           socket.emit("action", { type: "self_user", data: users[socket.id] })
           break;
         case "server/private_message":
