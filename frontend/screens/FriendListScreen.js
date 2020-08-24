@@ -6,6 +6,7 @@ import { useSelector } from "react-redux"
 
 export default function FriendListScreen({navigation}) {
     const usersOnline = useSelector(state => state.usersOnline);
+    const selfUser = useSelector(state => state.selfUser);  
     const { itemContainerStyle, avatarImgStyle, avatarNameViewStyle } = styles;
 
     return (
@@ -14,7 +15,11 @@ export default function FriendListScreen({navigation}) {
               data={usersOnline}
               renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate("Chat", { name:item.username, userId: item.userId })}>
+                    <TouchableOpacity onPress={() => {
+                      if(selfUser.userId !== item.userId){
+                        navigation.navigate("Chat", { name:item.username, userId: item.userId })
+                      }
+                    }}>
                       <View style={itemContainerStyle}>
                         <View>
                           <Image 
