@@ -17,8 +17,7 @@ export default function ChatScreen({navigation}) {
                                                 return state.conversations
                                             });
   const userId = navigation.getParam("userId");
-  const messages = conversations[userId].messages;
-
+  const messages = conversations[selfUser.userId].messages;
   
   return (  
     <View style={{flex:1}}>
@@ -29,7 +28,7 @@ export default function ChatScreen({navigation}) {
             { 
               dispatch({
                 type: "private_message", 
-                data: { message: messages[0], conversationId: userId }
+                data: { message: messages[0], conversationId: selfUser.userId }
               });
               dispatch({
                 type: "server/private_message",
@@ -38,7 +37,7 @@ export default function ChatScreen({navigation}) {
             }
           }
           user={{
-              _id: selfUser.userId
+              _id: userId
           }}
         />
         
